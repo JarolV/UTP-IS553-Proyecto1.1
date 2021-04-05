@@ -18,11 +18,19 @@ public class Agenda {
     public Agenda() {
         listaContactos =new ArrayList<>();
     }
-    public boolean borrar(Contacto c){
-        return listaContactos.remove(c);
+    public void borrar(int posicion){
+        listaContactos.remove(posicion);
     }
     public List<Contacto> getAgenda() {
         return listaContactos;
+    }
+    public void editar(int c,Contacto cambio){
+        listaContactos.get(c).setNombre(cambio.getNombre());
+        listaContactos.get(c).setTelefono1(cambio.getTelefono1());
+        listaContactos.get(c).setTelefono2(cambio.getTelefono2());
+        listaContactos.get(c).setCorreo(cambio.getCorreo());
+        listaContactos.get(c).setDireccion(cambio.getDireccion());
+        listaContactos.get(c).setAlias(cambio.getAlias());     
     }
     public boolean anadir(Contacto c){
         int contador=0;
