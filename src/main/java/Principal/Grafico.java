@@ -9,9 +9,7 @@ import Errores.EspaciosRequeridos;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,8 +35,8 @@ public class Grafico extends javax.swing.JFrame {
      */
     public Grafico() {
         initComponents();
-        leerArchivo();
         iniciarLibreta();
+        leerArchivo();
         cerrarVentana();
     }
 
@@ -618,25 +616,62 @@ public class Grafico extends javax.swing.JFrame {
     }
     //Escribir en el archivo 
     public void escribirArchivo(){
-        try(FileWriter fw = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw)){
-            for (int i = 0; i < agenda.getAgenda().size(); i++) {
-                out.println(agenda.getAgenda().get(i).contactoArchivo());
-                System.out.println("se escribio correctamente");
+        try {
+            FileWriter fichero = null;
+            PrintWriter pw = null;
+            try {
+                fichero = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt");
+                pw = new PrintWriter(fichero);
+                System.out.println("dslkfjlksdfjlk");
+                for (int i = 0; i < agenda.getAgenda().size(); i++) {
+                    String contacto = agenda.getAgenda().get(i).contactoArchivo();
+                    for (int j = 0; j < contacto.length(); j++)
+                        pw.print(contacto.charAt(j));
+                    pw.println();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException e) {
-            System.out.println("No se escribio el archivo");
-        } 
+            fichero.close();  
+        } catch (IOException ex) {
+            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     //leer archivo 
     public void leerArchivo(){
       try {
            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt"));
-           String texto=br.readLine();
-           while(texto != null){
-               System.out.println(texto);
-               texto = br.readLine();
+           String lineaExtraida=br.readLine();
+           while(lineaExtraida != null){
+               System.out.println(lineaExtraida);
+               //se extraen los datos
+               String[] lista = lineaExtraida.split("\\;");
+               String nombre= lista[0];
+               System.out.println(nombre);
+               //telefonos
+               String telefonos=lista[1];
+               String[] arrSplit2=telefonos.split("\\,");
+               String telefono= arrSplit2[0];
+               String telefono1=arrSplit2[1];
+               if(telefono1==null){
+                   telefono1="";
+               }
+               //resto de datos
+               String correo= lista[2];
+               if(correo==null)
+                   correo="";
+               String direccion= lista[3];
+               if(direccion==null)
+                   direccion="";
+               String alias= lista[4];
+               if(alias==null)
+                   alias="";
+               //crear y agregar contactoss
+               Contacto contacto;
+               contacto= new Contacto(nombre,telefono,telefono1,correo,direccion,alias);
+               agenda.anadir(contacto);
+               lineaExtraida = br.readLine();
            }
         } catch (IOException ex) {
             System.out.println("No se pudo leer");
