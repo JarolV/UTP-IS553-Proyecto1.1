@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.proyecto1agenda;
+package Principal;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;

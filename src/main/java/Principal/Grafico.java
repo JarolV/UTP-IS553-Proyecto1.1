@@ -3,11 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.proyecto1agenda;
+package Principal;
 
 import Errores.EspaciosRequeridos;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -26,7 +37,9 @@ public class Grafico extends javax.swing.JFrame {
      */
     public Grafico() {
         initComponents();
+        leerArchivo();
         iniciarLibreta();
+        cerrarVentana();
     }
 
     /**
@@ -65,6 +78,16 @@ public class Grafico extends javax.swing.JFrame {
         textDireccion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agenda");
@@ -163,7 +186,7 @@ public class Grafico extends javax.swing.JFrame {
                     .addComponent(textTel1)
                     .addComponent(textTel2)
                     .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +227,7 @@ public class Grafico extends javax.swing.JFrame {
                     .addComponent(texCorreo)
                     .addComponent(textDireccion)
                     .addComponent(TextAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,8 +309,8 @@ public class Grafico extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -295,25 +318,116 @@ public class Grafico extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Principal", jPanel6);
+
+        jLabel9.setText("Buscar");
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 691, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 573, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel7);
+        jTabbedPane1.addTab("Buscar", jPanel7);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jButton2.setText("Importar");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jButton3.setText("Exportar");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(130, 130, 130)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(220, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Importar/Exportar", jPanel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -335,49 +449,52 @@ public class Grafico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        try {
-          if(agenda.anadir(obtenerCampos())){
-              modeloTabla.actualizarDatos();
-              limpiarCampos();
-              JOptionPane.showMessageDialog(this,"El contacto se agrego correctamente");
-          }else{
-              JOptionPane.showMessageDialog(this,"Ya existe un contato con el mismo numero");
-          }
-        } catch (EspaciosRequeridos ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_botonGuardarActionPerformed
-
-    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
-        int row = jTable1.getSelectedRow();
-        System.out.println(row);
-        if (row != -1) {
-                int confirmado = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminarlo?");
-                if (JOptionPane.OK_OPTION == confirmado){
-                        agenda.borrar(row);
-                        modeloTabla.actualizarDatos();
-                        JOptionPane.showMessageDialog(this, "Persona eliminada exitosamente!",
-                            getTitle(), JOptionPane.ERROR_MESSAGE);
-                }  
-        }
-    }//GEN-LAST:event_botonEliminarActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void textNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textNombreActionPerformed
 
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        try {
+            if(agenda.anadir(obtenerCampos())){
+                modeloTabla.actualizarDatos();
+                limpiarCampos();
+                JOptionPane.showMessageDialog(this,"El contacto se agrego correctamente");
+            }else{
+                JOptionPane.showMessageDialog(this,"Ya existe un contato con el mismo numero");
+            }
+        } catch (EspaciosRequeridos ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        int row = jTable1.getSelectedRow();        
+        int row = jTable1.getSelectedRow();
         try {
             agenda.editar(row,obtenerCampos());
             modeloTabla.actualizarDatos();
         } catch (EspaciosRequeridos ex) {
             Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-      
+
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        int row = jTable1.getSelectedRow();
+        System.out.println(row);
+        if (row != -1) {
+            int confirmado = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminarlo?");
+            if (JOptionPane.OK_OPTION == confirmado){
+                agenda.borrar(row);
+                modeloTabla.actualizarDatos();
+                JOptionPane.showMessageDialog(this, "Persona eliminada exitosamente!",
+                    getTitle(), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,6 +531,16 @@ public class Grafico extends javax.swing.JFrame {
         });
     }
     private void iniciarLibreta() {
+        //iniciar el archivo para almacenar los contactos
+        File archivo =new File("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt");
+           if(!archivo.exists()){
+                try {
+                    archivo.createNewFile();
+                } catch (IOException ex) {
+                    System.out.println("No se pudo crear el archivo");
+                }
+        }
+        //Inicio de la agenda (La tabla)
         agenda= new Agenda(); 
         modeloTabla = new ModeloTabla(agenda.getAgenda());
         jTable1.setModel(modeloTabla);
@@ -429,7 +556,7 @@ public class Grafico extends javax.swing.JFrame {
         });    
     }
     private void limpiarCampos() {
-        // 1. Limpiar campos del formulario
+        //Limpiar campos del formulario
         textNombre.setText("");
         textTel1.setText("");
         textTel2.setText("");
@@ -441,6 +568,7 @@ public class Grafico extends javax.swing.JFrame {
     }
     
     private void cargar(Contacto c){
+        //carga los campos para actualizacion del contacto 
         textNombre.setText(c.getNombre());
         textTel1.setText(c.getTelefono1());
         textTel2.setText(c.getTelefono2());
@@ -449,26 +577,70 @@ public class Grafico extends javax.swing.JFrame {
         TextAlias.setText(c.getAlias());
     }
     private Contacto obtenerCampos() throws EspaciosRequeridos{
+        //retorna el contacto obtenido del formulario
+        //valida que el nombre no esta en blanco porque es requerido
         if(textNombre.getText().isBlank())
             throw new EspaciosRequeridos("El nombre es obligatorio");
-        
+        //valida que el telefono no este en blanco porque es requerido
         if(textTel1.getText().isBlank())
             throw new EspaciosRequeridos("Se debe agregar al menos un numero de telefono");
-        
+        //valida que el primer telefono sea solo numerico
         if(!textTel1.getText().trim().matches("[0-9]+"))
             throw new EspaciosRequeridos("Los telefonos son solo numericos");
-        if(!(textTel1.getText().trim().length()>=10))
+        //valida que el numero de telefono sea mayor a seis numerosl telefono(6 digitos) Movil(10 digitos)
+        if(!(textTel1.getText().trim().length()>=6))
             throw new EspaciosRequeridos("El numero de telefono debe tener 10 digitos");
+        //valida que el segundo telefono sea numerico
         if(!textTel2.getText().trim().matches("[0-9]+") && !textTel2.getText().isBlank())
             throw new EspaciosRequeridos("Los telefonos son solo numericos");
-        if(!(textTel2.getText().trim().length()>=10) && !textTel2.getText().isBlank() )
+        //valida que el segundo numero sea mayor a seis
+        if(!(textTel2.getText().trim().length()>=6) && !textTel2.getText().isBlank() )
             throw new EspaciosRequeridos("El numero de telefono debe tener 10 digitos");
-        if(!texCorreo.getText().trim().matches("[-\\w\\.]+@\\w+\\.\\w+") && !textTel2.getText().isBlank())
-            throw new EspaciosRequeridos("El correo debe contener @");
         
+        
+        //retorna el contacto para el guardado o actualizacion
         Contacto a=new Contacto(textNombre.getText().trim(), textTel1.getText().trim(), textTel2.getText().trim(),texCorreo.getText().trim(), textDireccion.getText().trim(), TextAlias.getText().trim());
         return a;
-    
+    }  
+    public void cerrarVentana(){
+        try{
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            addWindowListener(new WindowAdapter(){
+                    public void windowClosing(WindowEvent e){
+                        escribirArchivo();
+                        System.out.println("se guardo correctamente");
+                    }
+            });
+            this.setVisible(true);
+        }catch(Exception e){
+            System.out.println("No se pudo escribir");
+        }
+    }
+    //Escribir en el archivo 
+    public void escribirArchivo(){
+        try(FileWriter fw = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw)){
+            for (int i = 0; i < agenda.getAgenda().size(); i++) {
+                out.println(agenda.getAgenda().get(i).contactoArchivo());
+                System.out.println("se escribio correctamente");
+            }
+        } catch (IOException e) {
+            System.out.println("No se escribio el archivo");
+        } 
+    }
+    //leer archivo 
+    public void leerArchivo(){
+      try {
+           BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt"));
+           String texto=br.readLine();
+           while(texto != null){
+               System.out.println(texto);
+               texto = br.readLine();
+           }
+        } catch (IOException ex) {
+            System.out.println("No se pudo leer");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -476,6 +648,9 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonGuardar;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -484,16 +659,23 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField texCorreo;
     private javax.swing.JTextField textDireccion;
     private javax.swing.JTextField textNombre;

@@ -5,6 +5,11 @@
  */
 package modulos;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +18,7 @@ import java.util.List;
  * @author jarol
  */
 public class Agenda {
-    List<Contacto> listaContactos;
+    private List<Contacto> listaContactos;
 
     public Agenda() {
         listaContactos =new ArrayList<>();
@@ -24,6 +29,7 @@ public class Agenda {
     public List<Contacto> getAgenda() {
         return listaContactos;
     }
+    
     public void editar(int c,Contacto cambio){
         listaContactos.get(c).setNombre(cambio.getNombre());
         listaContactos.get(c).setTelefono1(cambio.getTelefono1());

@@ -75,6 +75,7 @@ public class Contacto {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-    
-   
+    public String contactoArchivo(){
+        return nombre+";"+telefono1+","+telefono2+";"+correo+";"+direccion+";"+alias+";";
+    } 
 }
