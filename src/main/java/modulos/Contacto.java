@@ -78,6 +78,9 @@ public class Contacto {
     public String contactoArchivo(){
         return nombre+";"+telefono1+","+telefono2+" ;"+correo+";"+direccion+";"+alias+"; ";
     } 
+    public String busqueda(){
+        return nombre+"  "+telefono1+"  "+telefono2+"  "+correo+"  "+direccion+"  "+alias;
+    }
 
     @Override
     public int hashCode() {
