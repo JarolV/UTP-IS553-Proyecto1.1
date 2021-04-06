@@ -27,7 +27,7 @@ public class Contacto {
         this.direccion = direccion;
         this.alias = alias;
     }
-    
+    public Contacto(){}
     public String getNombre() {
         return nombre;
     }
@@ -76,6 +76,46 @@ public class Contacto {
         this.alias = alias;
     }
     public String contactoArchivo(){
-        return nombre+";"+telefono1+","+telefono2+";"+correo+";"+direccion+";"+alias+";";
+        return nombre+";"+telefono1+","+telefono2+" ;"+correo+";"+direccion+";"+alias+"; ";
     } 
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contacto other = (Contacto) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono1, other.telefono1)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono2, other.telefono2)) {
+            return false;
+        }
+        if (!Objects.equals(this.correo, other.correo)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.alias, other.alias)) {
+            return false;
+        }
+        return true;
+    }
+    
 }
