@@ -10,18 +10,23 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import modulos.Agenda;
 import modulos.Contacto;
+import modulos.archivos;
 
 /**
  *
@@ -30,13 +35,14 @@ import modulos.Contacto;
 public class Grafico extends javax.swing.JFrame {
     Agenda agenda;
     ModeloTabla modeloTabla;
+    archivos archivo;
     /**
      * Creates new form Grafico
      */
     public Grafico() {
         initComponents();
         iniciarLibreta();
-        leerArchivo();
+        archivo.leerArchivo(agenda);
         cerrarVentana();
     }
 
@@ -81,6 +87,9 @@ public class Grafico extends javax.swing.JFrame {
         botonBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jPanel8 = new javax.swing.JPanel();
+        botonImportar = new javax.swing.JButton();
+        botonExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agenda");
@@ -366,6 +375,43 @@ public class Grafico extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Buscar", jPanel7);
 
+        botonImportar.setText("Importar");
+        botonImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonImportarActionPerformed(evt);
+            }
+        });
+
+        botonExportar.setText("Exportar");
+        botonExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonExportarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(143, 143, 143)
+                .addComponent(botonImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89)
+                .addComponent(botonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(216, 216, 216)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonImportar)
+                    .addComponent(botonExportar))
+                .addContainerGap(228, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Importar/Exportar", jPanel8);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -432,6 +478,67 @@ public class Grafico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
 
+    private void botonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImportarActionPerformed
+        try {
+            JFileChooser fc=new JFileChooser();
+            fc.showOpenDialog(null);
+            File archivoFile=fc.getSelectedFile();
+            FileReader fr =new FileReader(archivoFile);
+            BufferedReader br =new BufferedReader(fr);
+            String lineaExtraida=br.readLine();
+            while(lineaExtraida != null){
+               System.out.println(lineaExtraida);
+               //se extraen los datos
+               String[] lista = lineaExtraida.split("\\;");
+               String nombre= lista[0];
+               //resto de datos
+               String correo= lista[2];
+               String direccion= lista[3];
+               String alias= lista[4];
+               //crear y agregar contacto
+               String[] lista2 =lista[1].split("\\,");
+               System.out.println(lista2);
+               String telefono= lista2[0];
+               String telefono1=lista2[1];
+               Contacto contacto;
+               contacto= new Contacto(nombre,telefono,telefono1.trim(),correo,direccion,alias);
+               agenda.anadir(contacto);
+               lineaExtraida = br.readLine();
+           }
+            JOptionPane.showMessageDialog(null,"Archivo leido correctamente");
+        } catch (IOException ex) {
+            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        modeloTabla.actualizarDatos();
+    }//GEN-LAST:event_botonImportarActionPerformed
+
+    private void botonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExportarActionPerformed
+        JFileChooser guardar = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
+        guardar.setFileFilter(filtro);
+        guardar.showSaveDialog(null);
+        guardar.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        File archivo = guardar.getSelectedFile();
+        PrintWriter pw = null;
+        FileWriter fichero = null;
+        try {
+            fichero = new FileWriter(archivo, true);
+            pw = new PrintWriter(fichero);
+                for (int i = 0; i < agenda.getAgenda().size(); i++) {
+                    String contacto = agenda.getAgenda().get(i).contactoArchivo();
+                    for (int j = 0; j < contacto.length(); j++)
+                        pw.print(contacto.charAt(j));
+                    pw.println();
+                }
+            fichero.close();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar, ponga nombre al archivo");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar, en la salida");
+        }
+
+    }//GEN-LAST:event_botonExportarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -467,16 +574,7 @@ public class Grafico extends javax.swing.JFrame {
         });
     }
     private void iniciarLibreta() {
-        //iniciar el archivo para almacenar los contactos
-        File archivo =new File("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt");
-           if(!archivo.exists()){
-                try {
-                    archivo.createNewFile();
-                } catch (IOException ex) {
-                    System.out.println("No se pudo crear el archivo");
-                }
-        }
-        //Inicio de la agenda (La tabla)
+        archivo=new archivos();
         agenda= new Agenda(); 
         modeloTabla = new ModeloTabla(agenda.getAgenda());
         jTable1.setModel(modeloTabla);
@@ -543,7 +641,7 @@ public class Grafico extends javax.swing.JFrame {
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             addWindowListener(new WindowAdapter(){
                     public void windowClosing(WindowEvent e){
-                        escribirArchivo();
+                        archivo.escribirArchivo(agenda);
                         System.out.println("se guardo correctamente");
                     }
             });
@@ -552,64 +650,14 @@ public class Grafico extends javax.swing.JFrame {
             System.out.println("No se pudo escribir");
         }
     }
-    //Escribir en el archivo 
-    public void escribirArchivo(){
-        try {
-            FileWriter fichero = null;
-            PrintWriter pw = null;
-            try {
-                fichero = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt");
-                pw = new PrintWriter(fichero);
-                for (int i = 0; i < agenda.getAgenda().size(); i++) {
-                    String contacto = agenda.getAgenda().get(i).contactoArchivo();
-                    for (int j = 0; j < contacto.length(); j++)
-                        pw.print(contacto.charAt(j));
-                    pw.println();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            fichero.close();  
-        } catch (IOException ex) {
-            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-    
-    //leer archivo 
-    public void leerArchivo(){
-      try {
-           BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Archivos\\Agenda.txt"));
-           String lineaExtraida=br.readLine();
-           while(lineaExtraida != null){
-               System.out.println(lineaExtraida);
-               //se extraen los datos
-               String[] lista = lineaExtraida.split("\\;");
-               String nombre= lista[0];
-               //resto de datos
-               String correo= lista[2];
-               String direccion= lista[3];
-               String alias= lista[4];
-               //crear y agregar contacto
-               String[] lista2 =lista[1].split("\\,");
-               System.out.println(lista2);
-               String telefono= lista2[0];
-               String telefono1=lista2[1];
-               Contacto contacto;
-               contacto= new Contacto(nombre,telefono,telefono1.trim(),correo,direccion,alias);
-               agenda.anadir(contacto);
-               lineaExtraida = br.readLine();
-           }
-        } catch (IOException ex) {
-            System.out.println("No se pudo leer");
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TextAlias;
     private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonExportar;
     private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonImportar;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -628,6 +676,7 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
