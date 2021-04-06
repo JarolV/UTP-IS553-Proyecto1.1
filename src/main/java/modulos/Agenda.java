@@ -18,7 +18,7 @@ import java.util.List;
  * @author jarol
  */
 public class Agenda {
-    private List<Contacto> listaContactos;
+    public List<Contacto> listaContactos;
 
     public Agenda() {
         listaContactos =new ArrayList<>();
