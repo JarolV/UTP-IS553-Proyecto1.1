@@ -24,13 +24,27 @@ public class Agenda {
     public List<Contacto> getAgenda() {
         return listaContactos;
     }
-//    public List<Contacto> Bucar(String busqueda){
-//        List<Contacto> a=new ArrayList<>();
-//        for (int i = 0; i < listaContactos.size(); i++) {
-//            System.out.println("");
-//        }
-//    }
-    
+    public String buscar(String busqueda){
+        for (int i = 0; i < listaContactos.size(); i++) {
+            if(busqueda.equals(listaContactos.get(i).getNombre()) 
+              || buscarTelefonos(busqueda,i)
+              || busqueda.equals(listaContactos.get(i).getDireccion())
+              || busqueda.equals(listaContactos.get(i).getCorreo())
+              || busqueda.equals(listaContactos.get(i).getAlias())){
+                return listaContactos.get(i).toString();
+            }
+         }
+        return null;
+    }
+    public boolean buscarTelefonos(String buscar,int posicion){
+        Long numero=Long.parseLong(buscar);
+          for (int i = 0; i < listaContactos.get(posicion).getTelefono1().size(); i++) {
+            if(listaContactos.get(posicion).getTelefono1().get(i)==numero)
+                return true;
+           }
+        return false;
+    }
+   
     public void editar(int c,Contacto cambio){
         listaContactos.get(c).setNombre(cambio.getNombre());
         listaContactos.get(c).setTelefono1(cambio.getTelefono1());

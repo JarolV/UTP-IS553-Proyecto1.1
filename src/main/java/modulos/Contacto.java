@@ -95,6 +95,13 @@ public class Contacto {
     }
 
     @Override
+    public String toString() {
+        String telefonos=telefono1.toString().substring(1,telefono1.toString().length()-1);
+        String telefonoSinEspacios = telefonos.replace(" ","");
+        return "nombre=" + nombre + ", telefono1=" + telefonoSinEspacios + ", correo=" + correo + ", direccion=" + direccion + ", alias=" + alias;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         return hash;

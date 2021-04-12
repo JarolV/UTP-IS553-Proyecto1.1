@@ -436,7 +436,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="514" max="-2" attributes="0"/>
+                          <Component id="mostrarBusqueda" min="-2" pref="514" max="-2" attributes="0"/>
                           <Component id="jLabel9" min="-2" pref="101" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="textoBuscar" min="-2" pref="156" max="-2" attributes="0"/>
@@ -459,7 +459,7 @@
                           <Component id="botonBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" pref="178" max="-2" attributes="0"/>
+                      <Component id="mostrarBusqueda" min="-2" pref="178" max="-2" attributes="0"/>
                       <EmptySpace pref="388" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -484,7 +484,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonBuscarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
+            <Component class="javax.swing.JLabel" name="mostrarBusqueda">
             </Component>
           </SubComponents>
         </Container>

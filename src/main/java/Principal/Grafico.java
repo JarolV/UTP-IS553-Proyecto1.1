@@ -91,7 +91,7 @@ public class Grafico extends javax.swing.JFrame {
         textoBuscar = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         botonBuscar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        mostrarBusqueda = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         botonImportar = new javax.swing.JButton();
         botonExportar = new javax.swing.JButton();
@@ -343,7 +343,7 @@ public class Grafico extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mostrarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -361,7 +361,7 @@ public class Grafico extends javax.swing.JFrame {
                     .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonBuscar))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mostrarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(388, Short.MAX_VALUE))
         );
 
@@ -426,7 +426,13 @@ public class Grafico extends javax.swing.JFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
            String busqueda=textoBuscar.getText().trim();
-           
+           String resultado=agenda.buscar(busqueda);
+           if(resultado==null){
+               JOptionPane.showMessageDialog(this,"No se encontro ningun contacto");
+           }else{
+               mostrarBusqueda.setText(resultado);
+               mostrarBusqueda.updateUI();
+           }
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
@@ -709,7 +715,6 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -725,6 +730,7 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel mostrarBusqueda;
     private javax.swing.JSpinner spinnetTel;
     private javax.swing.JTextField texCorreo;
     private javax.swing.JTextField textDireccion;
