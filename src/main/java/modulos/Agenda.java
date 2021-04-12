@@ -24,6 +24,12 @@ public class Agenda {
     public List<Contacto> getAgenda() {
         return listaContactos;
     }
+//    public List<Contacto> Bucar(String busqueda){
+//        List<Contacto> a=new ArrayList<>();
+//        for (int i = 0; i < listaContactos.size(); i++) {
+//            System.out.println("");
+//        }
+//    }
     
     public void editar(int c,Contacto cambio){
         listaContactos.get(c).setNombre(cambio.getNombre());
