@@ -433,7 +433,7 @@ public class Grafico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
-      
+           String busqueda=textoBuscar.getText().trim();
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
@@ -469,8 +469,10 @@ public class Grafico extends javax.swing.JFrame {
                String alias= lista[4];
                //crear y agregar contacto
                String[] lista2 =lista[1].split("\\,");
-               System.out.println(lista2);
-               List telefono=new ArrayList();
+               List<Long> telefono=new ArrayList();
+               for (int i = 0; i < lista2.length; i++) {
+                   telefono.add(Long.parseLong(lista2[i].trim()));
+               }
                Contacto contacto;
                contacto= new Contacto(nombre,telefono,correo,direccion,alias);
                agenda.anadir(contacto);
@@ -619,6 +621,7 @@ public class Grafico extends javax.swing.JFrame {
                 cargar(modeloTabla.getDato(row));
             }
             botonEliminar.setEnabled(row != -1);
+            btnActualizar.setEnabled(row != -1);
         });    
     }
     private void limpiarCampos() {
@@ -630,6 +633,8 @@ public class Grafico extends javax.swing.JFrame {
         for (Component c : textTelefonos.getComponents()) {
             ((JTextField)c).setText("");
         }
+        
+        
         jTable1.clearSelection();
     }
     
@@ -640,7 +645,7 @@ public class Grafico extends javax.swing.JFrame {
         spinnetTel.setValue(c.getTelefono1().size());
         int i=0;
         for (Component a : textTelefonos.getComponents()) {
-            ((JTextField)a).setText(c.getTelefono1().get(i).toString());
+            ((JTextField)a).setText(c.getTelefono1().get(i).toString().trim());
             i++;
         }
         textDireccion.setText(c.getDireccion());
@@ -653,9 +658,9 @@ public class Grafico extends javax.swing.JFrame {
             throw new EspaciosRequeridos("El nombre es obligatorio");
         //valida que el telefono no este en blanco porque es requerido
         //valida que el segundo telefono sea numerico
-        List telefono=new ArrayList();
+        List<Long> telefono=new ArrayList();
         for (Component c : textTelefonos.getComponents()) {
-            telefono.add(((JTextField)c).getText().trim());
+            telefono.add(Long.parseLong(((JTextField)c).getText().trim()));
         }
         //retorna el contacto para el guardado o actualizacion
         Contacto a=new Contacto(textNombre.getText().trim(),telefono,texCorreo.getText().trim(), textDireccion.getText().trim(), TextAlias.getText().trim());

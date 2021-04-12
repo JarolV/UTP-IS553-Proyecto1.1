@@ -1,3 +1,2 @@
-jarol;123456, ;;;; 
-Jarol;1232432432, ;;;; 
-carl;23213123, ;;;; 
+jarol;7868,876876,68768;jarol.vidal;calle 12;El pepe; 
+pepe;35678,9987;;;; 

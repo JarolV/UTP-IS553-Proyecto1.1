@@ -48,7 +48,7 @@ public class ModeloTabla extends DefaultTableModel{
             case 0:
                 return contacto.getNombre();
             case 1: 
-                return contacto.getTelefono1()+" "+contacto.getTelefono2();
+                return contacto.getTelefono1().toString().substring(1,contacto.getTelefono1().toString().length()-1);
             case 2: 
                 return contacto.getCorreo();
             case 3:

@@ -5,11 +5,6 @@
  */
 package modulos;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +28,6 @@ public class Agenda {
     public void editar(int c,Contacto cambio){
         listaContactos.get(c).setNombre(cambio.getNombre());
         listaContactos.get(c).setTelefono1(cambio.getTelefono1());
-        listaContactos.get(c).setTelefono2(cambio.getTelefono2());
         listaContactos.get(c).setCorreo(cambio.getCorreo());
         listaContactos.get(c).setDireccion(cambio.getDireccion());
         listaContactos.get(c).setAlias(cambio.getAlias());     
@@ -41,19 +35,18 @@ public class Agenda {
     public boolean anadir(Contacto c){
         int contador=0;
         for (int i = 0; i < listaContactos.size(); i++) {
-            if(listaContactos.get(i).getTelefono1().equals(c.getTelefono1()) 
-             ||listaContactos.get(i).getTelefono1().equals(c.getTelefono2()) && !"".equals(c.getTelefono2())
-             ||listaContactos.get(i).getTelefono2().equals(c.getTelefono2()) && !"".equals(c.getTelefono2())
-             ||listaContactos.get(i).getTelefono2().equals(c.getTelefono1()) && !"".equals(c.getTelefono1())){
+            if(!listaContactos.get(i).CompararTelefonos(c)){
                 contador++;
-            }   
+            }
         }
-        if(contador==0){
+        System.out.println(contador);
+        if(contador==listaContactos.size()){
             listaContactos.add(c);
             return true;
-        }else{
-            return false;
-        }      
+        }
+            
+        return false;
     }
+    
     
 }

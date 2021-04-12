@@ -11,6 +11,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -66,10 +69,12 @@ public class archivos {
                String alias= lista[4];
                //crear y agregar contacto
                String[] lista2 =lista[1].split("\\,");
-               String telefono= lista2[0];
-               String telefono1=lista2[1];
+               List<Long> telefono=new ArrayList();
+               for (int i = 0; i < lista2.length; i++) {
+                   telefono.add(Long.parseLong(lista2[i].trim()));
+               }
                Contacto contacto;
-               contacto= new Contacto(nombre,telefono,telefono1.trim(),correo,direccion,alias);
+               contacto= new Contacto(nombre,telefono ,correo,direccion,alias);
                agenda.anadir(contacto);
                lineaExtraida = br.readLine();
            }
