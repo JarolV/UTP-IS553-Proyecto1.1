@@ -56,12 +56,6 @@ public class Grafico extends javax.swing.JFrame {
         archivo.leerArchivo(agenda);
         cerrarVentana();
     }
-    @Override
-    public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().
-        getImage(ClassLoader.getSystemResource("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Icon\\iconagenda.png"));
-        return retValue;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,12 +99,9 @@ public class Grafico extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         botonImportar = new javax.swing.JButton();
         botonExportar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agenda");
-        setIconImage(getIconImage());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Lista Contactos");
@@ -147,7 +138,7 @@ public class Grafico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -370,7 +361,7 @@ public class Grafico extends javax.swing.JFrame {
                         .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
         jPanel7Layout.setVerticalGroup(
@@ -403,36 +394,24 @@ public class Grafico extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("jLabel4");
-
-        jLabel10.setText("jLabel10");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(143, 143, 143)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(128, 128, 128)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(181, 181, 181))
+                .addComponent(botonImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139)
+                .addComponent(botonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(229, 229, 229)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonImportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botonExportar))
                 .addGap(435, 435, 435))
         );
 
@@ -479,70 +458,6 @@ public class Grafico extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
-
-    private void botonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImportarActionPerformed
-        try {
-            JFileChooser fc=new JFileChooser();
-            fc.showOpenDialog(null);
-            File archivoFile=fc.getSelectedFile();
-            FileReader fr =new FileReader(archivoFile);
-            BufferedReader br =new BufferedReader(fr);
-            String lineaExtraida=br.readLine();
-            while(lineaExtraida != null){
-               System.out.println(lineaExtraida);
-               //se extraen los datos
-               String[] lista = lineaExtraida.split("\\;");
-               String nombre= lista[0];
-               //resto de datos
-               String correo= lista[2];
-               String direccion= lista[3];
-               String alias= lista[4];
-               //crear y agregar contacto
-               String[] lista2 =lista[1].split("\\,");
-               List<Long> telefono=new ArrayList();
-               for (int i = 0; i < lista2.length; i++) {
-                   telefono.add(Long.parseLong(lista2[i].trim()));
-               }
-               Contacto contacto;
-               contacto= new Contacto(nombre,telefono,correo,direccion,alias);
-               if(!agenda.anadir(contacto)){
-                   JOptionPane.showMessageDialog(this,"El contacto "+nombre+" ya existe por lo que no se agrego");
-               }
-               lineaExtraida = br.readLine();
-           }
-            JOptionPane.showMessageDialog(null,"Archivo leido correctamente");
-        } catch (IOException ex) {
-            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        modeloTabla.actualizarDatos();
-    }//GEN-LAST:event_botonImportarActionPerformed
-
-    private void botonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExportarActionPerformed
-        JFileChooser guardar = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
-        guardar.setFileFilter(filtro);
-        guardar.showSaveDialog(null);
-        guardar.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        File archivo = guardar.getSelectedFile();
-        PrintWriter pw = null;
-        FileWriter fichero = null;
-        try {
-            fichero = new FileWriter(archivo, true);
-            pw = new PrintWriter(fichero);
-                for (int i = 0; i < agenda.getAgenda().size(); i++) {
-                    String contacto = agenda.getAgenda().get(i).contactoArchivo();
-                    for (int j = 0; j < contacto.length(); j++)
-                        pw.print(contacto.charAt(j));
-                    pw.println();
-                }
-            fichero.close();
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar, ponga nombre al archivo");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar en la salida");
-        }
-
-    }//GEN-LAST:event_botonExportarActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         if(verificarTexfielTelefono()){
@@ -605,6 +520,69 @@ public class Grafico extends javax.swing.JFrame {
     private void textNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textNombreActionPerformed
+
+    private void botonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExportarActionPerformed
+        JFileChooser guardar = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
+        guardar.setFileFilter(filtro);
+        guardar.showSaveDialog(null);
+        guardar.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        File archivo = guardar.getSelectedFile();
+        PrintWriter pw = null;
+        FileWriter fichero = null;
+        try {
+            fichero = new FileWriter(archivo, true);
+            pw = new PrintWriter(fichero);
+            for (int i = 0; i < agenda.getAgenda().size(); i++) {
+                String contacto = agenda.getAgenda().get(i).contactoArchivo();
+                for (int j = 0; j < contacto.length(); j++)
+                pw.print(contacto.charAt(j));
+                pw.println();
+            }
+            fichero.close();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar, ponga nombre al archivo");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar en la salida");
+        }
+    }//GEN-LAST:event_botonExportarActionPerformed
+
+    private void botonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImportarActionPerformed
+        try {
+            JFileChooser fc=new JFileChooser();
+            fc.showOpenDialog(null);
+            File archivoFile=fc.getSelectedFile();
+            FileReader fr =new FileReader(archivoFile);
+            BufferedReader br =new BufferedReader(fr);
+            String lineaExtraida=br.readLine();
+            while(lineaExtraida != null){
+                System.out.println(lineaExtraida);
+                //se extraen los datos
+                String[] lista = lineaExtraida.split("\\;");
+                String nombre= lista[0];
+                //resto de datos
+                String correo= lista[2];
+                String direccion= lista[3];
+                String alias= lista[4];
+                //crear y agregar contacto
+                String[] lista2 =lista[1].split("\\,");
+                List<Long> telefono=new ArrayList();
+                for (int i = 0; i < lista2.length; i++) {
+                    telefono.add(Long.parseLong(lista2[i].trim()));
+                }
+                Contacto contacto;
+                contacto= new Contacto(nombre,telefono,correo,direccion,alias);
+                if(!agenda.anadir(contacto)){
+                    JOptionPane.showMessageDialog(this,"El contacto "+nombre+" ya existe por lo que no se agrego");
+                }
+                lineaExtraida = br.readLine();
+            }
+            JOptionPane.showMessageDialog(null,"Archivo leido correctamente");
+        } catch (IOException ex) {
+            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        modeloTabla.actualizarDatos();
+    }//GEN-LAST:event_botonImportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -749,10 +727,8 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JButton botonImportar;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
