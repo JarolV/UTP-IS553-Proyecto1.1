@@ -6,9 +6,11 @@
 package Principal;
 
 import Errores.EspaciosRequeridos;
+import Errores.GuardarDatosArchivos;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -48,12 +50,17 @@ public class Grafico extends javax.swing.JFrame {
     /**
      * Creates new form Grafico
      */
-    public Grafico() {
+    public Grafico() throws GuardarDatosArchivos {
         initComponents();
         iniciarLibreta();
-        //setIconImage(new ImageIcon(Grafico.class.getClassLoader().getResource("Principal/iconagenda.png")).getImage());
         archivo.leerArchivo(agenda);
         cerrarVentana();
+    }
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1Agenda\\src\\main\\java\\Icon\\iconagenda.png"));
+        return retValue;
     }
 
     /**
@@ -93,7 +100,8 @@ public class Grafico extends javax.swing.JFrame {
         textoBuscar = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         botonBuscar = new javax.swing.JButton();
-        mostrarBusqueda = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mostrarBusqueda = new javax.swing.JTextArea();
         jPanel8 = new javax.swing.JPanel();
         botonImportar = new javax.swing.JButton();
         botonExportar = new javax.swing.JButton();
@@ -346,7 +354,9 @@ public class Grafico extends javax.swing.JFrame {
             }
         });
 
-        mostrarBusqueda.setForeground(new java.awt.Color(255, 255, 255));
+        mostrarBusqueda.setColumns(20);
+        mostrarBusqueda.setRows(5);
+        jScrollPane2.setViewportView(mostrarBusqueda);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -355,13 +365,13 @@ public class Grafico extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mostrarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,9 +382,9 @@ public class Grafico extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonBuscar))
-                .addGap(18, 18, 18)
-                .addComponent(mostrarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addGap(312, 312, 312))
         );
 
         jTabbedPane1.addTab("Buscar", jPanel7);
@@ -561,11 +571,10 @@ public class Grafico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void spinnetTelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnetTelStateChanged
-        System.out.println("stateChanged");
         var num = (Integer) spinnetTel.getValue();
-        var contenido = textTelefonos.getComponents().length;
-        if (num > contenido) {
-            for (int i = contenido; i < num; i++) {
+        var telefonos = textTelefonos.getComponents().length;
+        if (num > telefonos) {
+            for (int i = telefonos; i < num; i++) {
                 var componente = new JTextField();
                 componente.addKeyListener(new KeyAdapter() {
                     @Override
@@ -581,8 +590,8 @@ public class Grafico extends javax.swing.JFrame {
                 });
                 textTelefonos.add(componente);
             }
-        } else if (num < contenido) {
-            for (int i = contenido; i > num; i--) {
+        } else if (num < telefonos) {
+            for (int i = telefonos; i > num; i--) {
                 textTelefonos.remove(i - 1);
             }
         }
@@ -627,7 +636,11 @@ public class Grafico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Grafico().setVisible(true);
+                try {
+                    new Grafico().setVisible(true);
+                } catch (GuardarDatosArchivos ex) {
+                    Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -694,18 +707,18 @@ public class Grafico extends javax.swing.JFrame {
         return a;
     }  
     public void cerrarVentana(){
-        try{
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             addWindowListener(new WindowAdapter(){
                     public void windowClosing(WindowEvent e){
-                        archivo.escribirArchivo(agenda);
-                        System.out.println("se guardo correctamente");
+                        try {
+                            archivo.escribirArchivo(agenda);
+                        } catch (GuardarDatosArchivos ex) {
+                            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
             });
             this.setVisible(true);
-        }catch(Exception e){
-            System.out.println("No se pudo escribir");
-        }
+        
     }
     private boolean verificarTexfielTelefono(){
         var contador=0;
@@ -753,9 +766,10 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel mostrarBusqueda;
+    private javax.swing.JTextArea mostrarBusqueda;
     private javax.swing.JSpinner spinnetTel;
     private javax.swing.JTextField texCorreo;
     private javax.swing.JTextField textDireccion;
