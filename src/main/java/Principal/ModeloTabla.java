@@ -15,7 +15,7 @@ import modulos.Contacto;
  */
 public class ModeloTabla extends DefaultTableModel{
     
-    private final String[] columnas = {"Nombre", "Telefonos", "correo","Direccion", "Alias"};
+    private final String[] columnas = {"Nombre", "Telefonos", "correo","Direccion", "Alias","Lugar"};
     private List<Contacto> datos;
 
     public ModeloTabla(List<Contacto> datos) {
@@ -55,6 +55,8 @@ public class ModeloTabla extends DefaultTableModel{
                 return contacto.getDireccion();
             case 4: 
                 return contacto.getAlias();
+            case 5:
+                return contacto.getDondeConoci();
                 
         }
         return super.getValueAt(row, column);
