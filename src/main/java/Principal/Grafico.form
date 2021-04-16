@@ -91,7 +91,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="botonEliminar" min="-2" pref="73" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" pref="568" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" pref="628" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -445,7 +445,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="botonBuscar" min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" alignment="0" pref="554" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="614" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
@@ -518,10 +518,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                      <Component id="botonImportar" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="botonImportar" pref="90" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
-                      <Component id="botonExportar" min="-2" pref="90" max="-2" attributes="0"/>
-                      <EmptySpace pref="146" max="32767" attributes="0"/>
+                      <Component id="botonExportar" pref="90" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

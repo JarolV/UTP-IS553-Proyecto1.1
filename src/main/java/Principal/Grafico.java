@@ -53,6 +53,7 @@ public class Grafico extends javax.swing.JFrame {
     public Grafico() throws GuardarDatosArchivos {
         initComponents();
         iniciarLibreta();
+        archivo.crearArchivo();
         archivo.leerArchivo(agenda);
         cerrarVentana();
     }
@@ -138,7 +139,7 @@ public class Grafico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -361,7 +362,7 @@ public class Grafico extends javax.swing.JFrame {
                         .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
         jPanel7Layout.setVerticalGroup(
@@ -400,10 +401,10 @@ public class Grafico extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(143, 143, 143)
-                .addComponent(botonImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonImportar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                 .addGap(139, 139, 139)
-                .addComponent(botonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addComponent(botonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addGap(206, 206, 206))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,7 +448,6 @@ public class Grafico extends javax.swing.JFrame {
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         int row = jTable1.getSelectedRow();
-        System.out.println(row);
         if (row != -1) {
             int confirmado = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminarlo?");
             if (JOptionPane.OK_OPTION == confirmado){
@@ -536,7 +536,7 @@ public class Grafico extends javax.swing.JFrame {
             for (int i = 0; i < agenda.getAgenda().size(); i++) {
                 String contacto = agenda.getAgenda().get(i).contactoArchivo();
                 for (int j = 0; j < contacto.length(); j++)
-                pw.print(contacto.charAt(j));
+                    pw.print(contacto.charAt(j));
                 pw.println();
             }
             fichero.close();
@@ -556,7 +556,6 @@ public class Grafico extends javax.swing.JFrame {
             BufferedReader br =new BufferedReader(fr);
             String lineaExtraida=br.readLine();
             while(lineaExtraida != null){
-                System.out.println(lineaExtraida);
                 //se extraen los datos
                 String[] lista = lineaExtraida.split("\\;");
                 String nombre= lista[0];
@@ -637,8 +636,6 @@ public class Grafico extends javax.swing.JFrame {
             }
             botonEliminar.setEnabled(row != -1);
             btnActualizar.setEnabled(row != -1);
-            jPanel1.updateUI();
-            jPanel3.updateUI();
         }); 
         
     }
@@ -651,7 +648,6 @@ public class Grafico extends javax.swing.JFrame {
         for (Component c : textTelefonos.getComponents()) {
             ((JTextField)c).setText("");
         }
-        
         
         jTable1.clearSelection();
     }
